@@ -9,31 +9,31 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import butterknife.Bind;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
 
   private TextToSpeech mEngine;
-  private EditText mTtsInput;
-  private Button mTtsBtn;
+  @Bind(R.id.tts_edittext) EditText mTtsInput;
+  @Bind(R.id.tts_button) Button mTtsBtn;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    mTtsInput = (EditText) findViewById(R.id.tts_edittext);
-    mTtsBtn = (Button) findViewById(R.id.tts_button);
-    mTtsBtn.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        final String inputText = mTtsInput.getText().toString();
-        if(!TextUtils.isEmpty(inputText)){
-          if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            mEngine.speak(inputText, TextToSpeech.QUEUE_FLUSH, null, null);
-          }else{
-            mEngine.speak(inputText, TextToSpeech.QUEUE_FLUSH, null);
+
+    mTtsBtn.setOnClickListener(
+        view -> {
+          final String inputText = mTtsInput.getText().toString();
+          if(!TextUtils.isEmpty(inputText)){
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+              mEngine.speak(inputText, TextToSpeech.QUEUE_FLUSH, null, null);
+            }else{
+              mEngine.speak(inputText, TextToSpeech.QUEUE_FLUSH, null);
+            }
           }
         }
-      }
-    });
+        );
   }
 
   @Override public void onInit(int status) {
