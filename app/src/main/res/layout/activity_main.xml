@@ -18,6 +18,13 @@
       android:layout_marginBottom="20dp"
       android:gravity="center"
       />
+    <Button
+        android:id="@+id/stt_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="말해서 쓰기"
+        />
   <Button
       android:id="@+id/tts_button"
       android:layout_width="match_parent"
@@ -25,5 +32,12 @@
       android:gravity="center"
       android:text="읽기"
       />
+    <Button
+        android:id="@+id/stt_result_check_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="결과 확인"
+        />
 </LinearLayout>
 
