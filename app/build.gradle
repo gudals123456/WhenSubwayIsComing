@@ -29,5 +29,12 @@ dependencies {
   testCompile 'junit:junit:4.12'
   compile 'com.android.support:appcompat-v7:23.1.1'
   compile 'com.jakewharton:butterknife:7.0.1'
+  //network related
+  compile 'com.squareup.retrofit:retrofit:1.6.1'
+  compile 'com.squareup.okhttp:okhttp:2.7.4'
+  compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.4'
+  compile 'com.loopj.android:android-async-http:1.4.9' //http://loopj.com/android-async-http/
+  compile 'com.parse.bolts:bolts-tasks:1.4.0'
+  compile 'com.parse.bolts:bolts-applinks:1.4.0'
 
 }

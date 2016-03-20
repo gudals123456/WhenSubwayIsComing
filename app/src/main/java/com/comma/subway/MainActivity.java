@@ -1,16 +1,19 @@
 package com.comma.subway;
 
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import butterknife.Bind;
+import com.comma.subway.network.SubwayApi;
 import java.util.Locale;
+import retrofit.client.Response;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
 
@@ -21,6 +24,15 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    new Handler(Looper.myLooper()).post(new Runnable() {
+      @Override public void run() {
+        final SubwayApi r = SubwayApplication.mRestAdapterBuilder.build().create(SubwayApi.class);
+        String uri = "http://swopenapi.seoul.go.kr/api/subway/4170517367786b64343068584e6949/json/realtimeStationArrival/0/5/%ED%9A%8C%EA%B8%B0서울";
+        Response response = r.me(uri, null);
+        Log.d("koo", response.getBody().toString());
+      }
+    });
 
     mTtsBtn.setOnClickListener(
         view -> {
@@ -35,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
         );
   }
+
+
 
   @Override public void onInit(int status) {
     Log.d("koo", "OnInit - Status ["+status+"]"+ "TextToSpeech.SUCCESS:"+TextToSpeech.SUCCESS);
