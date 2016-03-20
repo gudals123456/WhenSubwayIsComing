@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
   private SpeechRecognizer mRecognizer;
   private String mHeardText;
 
+  private ArrayList<String> mRightQuestionList;
 
   @Bind(R.id.tts_edittext) EditText mTtsInput;
   @Bind(R.id.tts_button) Button mTtsBtn;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
+
+    setRightQuestionList();
 
   //------------- for STT start
 
@@ -72,7 +75,30 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
               }
             }
     );
+  }
 
+  private void recognizeQuestion(String heardText) {
+
+    if(mRightQuestionList.contains(heardText))
+      Log.d("kim","다음 지하철은 3분후 입니다(예시)");
+      // 자훈이형이 짠 코드 실행
+    else {
+      Log.d("kim","인식 되지 않음");
+    }
+
+  }
+
+  private void setRightQuestionList () {
+    mRightQuestionList = new ArrayList<String>();
+
+    mRightQuestionList.add("다음 지하철 언제 와");
+    mRightQuestionList.add("다음 지하철 혼자");
+    mRightQuestionList.add("다음 지하철 언제야");
+    mRightQuestionList.add("다음 지하철 언제");
+    mRightQuestionList.add("다음 지하철");
+    mRightQuestionList.add("언제");
+    mRightQuestionList.add("언제야");
+    mRightQuestionList.add("언제 와");
 
   }
 
@@ -99,7 +125,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     @Override
     public void onEndOfSpeech() {
-      Log.d("kim","end speech");
+      Log.d("kim", "end speech");
+
     }
 
     @Override
@@ -112,8 +139,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
       ArrayList<String> resultList = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
       Log.d("kim",resultList.get(0));
-
+      mHeardText = resultList.get(0);
       mTtsInput.setText(mHeardText);
+
+      recognizeQuestion(mHeardText);
 
     }
 
